@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(1); // current game scene
         }
     }
-
+ 
     public void GameOver()
     {
         isGameOver = true;
