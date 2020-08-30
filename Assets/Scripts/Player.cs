@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private int lives = 3;
     [SerializeField] private int score = 0;
+    [SerializeField] private GameObject leftEngineDamage;
+    [SerializeField] private GameObject rightEngineDamage;
 
     //play area dimensions
     //TODO: move these to a general game options class.  these are reused here and in other classes
@@ -29,8 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isSpeedBoostActive = false; // for visibility in inspector
     [SerializeField] private bool isShieldActive = false;
 
-    [SerializeField] private GameObject leftEngineDamage;
-    [SerializeField] private GameObject rightEngineDamage;
+    
 
     // cached references
     private Spawner _spawner;
@@ -127,8 +128,9 @@ public class Player : MonoBehaviour
 
     private void RandomizeEngineDamage()
     {
+        // surely there is a better way to do this!
         var engine = Random.Range(0, 2);
-
+        
         if (engine == 0)
         {
             if (leftEngineDamage.activeInHierarchy == false)
