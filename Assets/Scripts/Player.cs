@@ -36,10 +36,13 @@ public class Player : MonoBehaviour
     // cached references
     private Spawner _spawner;
     private UIManager _uiManager;
+    private AudioManager _audioManager;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        
         transform.position = new Vector3(0, 0, 0);
         shieldVisualizer.SetActive(false);
 
@@ -56,6 +59,12 @@ public class Player : MonoBehaviour
             Debug.LogError("The UI Manager is null.");
         }
 
+        _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (_audioManager == null)
+        {
+            Debug.LogError("The Audio Manager is null.");
+        }
+        
     }
 
     // Update is called once per frame
@@ -99,8 +108,7 @@ public class Player : MonoBehaviour
                 Instantiate(laser, new Vector3(transform.position.x, transform.position.y + laserOffset, 0),
                     Quaternion.identity);
             }
-
-
+            _audioManager.PlayLaserShot();
         }
     }
 
@@ -120,6 +128,7 @@ public class Player : MonoBehaviour
         if (lives < 1)
         {
             _spawner.OnPlayerDeath();
+            _audioManager.PlayExplosion();
             Destroy(gameObject);
         }
 

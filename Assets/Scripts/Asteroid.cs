@@ -10,6 +10,7 @@ public class Asteroid : MonoBehaviour
     //Cached references
     [SerializeField] private GameObject explosionPrefab;
     private Spawner _spawner;
+    private AudioManager _audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,12 @@ public class Asteroid : MonoBehaviour
         if (_spawner == null)
         {
             Debug.LogError("Spawner is null");
+        }
+
+        _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (_audioManager == null)
+        {
+            Debug.LogError("The Audio Manager is null.");
         }
     }
 
@@ -35,6 +42,7 @@ public class Asteroid : MonoBehaviour
             _spawner.StartSpawning();
             Destroy(other.gameObject);
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            _audioManager.PlayExplosion();
             Destroy(gameObject, 0.25f);
         }
     }

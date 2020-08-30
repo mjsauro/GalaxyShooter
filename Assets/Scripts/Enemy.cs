@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private static readonly int OnEnemyDeath = Animator.StringToHash("OnEnemyDeath");
     private Collider2D _collider2D;
+    private AudioManager _audioManager;
 
     //Start is called before the first frame update
     void Start()
@@ -35,6 +36,12 @@ public class Enemy : MonoBehaviour
         if (_animator == null)
         {
             Debug.LogError("Animator is null");
+        }
+
+        _audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (_audioManager == null)
+        {
+            Debug.LogError("The Audio Manager is null.");
         }
     }
 
@@ -84,6 +91,7 @@ public class Enemy : MonoBehaviour
         _collider2D.enabled = false; // stops the enemy from damaging player before the enemy object is destroyed
         speed /= 2;
         _animator.SetTrigger(OnEnemyDeath); // 0 is on enemy death
+        _audioManager.PlayExplosion();
         yield return new WaitForSeconds(2.8f);
         Destroy(gameObject);
         
