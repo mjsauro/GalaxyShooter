@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private int lives = 3;
     [SerializeField] private int score = 0;
-    
+
     //play area dimensions
     //TODO: move these to a general game options class.  these are reused here and in other classes
     [SerializeField] private float speedMultiplier = 2f;
@@ -29,15 +29,19 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isSpeedBoostActive = false; // for visibility in inspector
     [SerializeField] private bool isShieldActive = false;
 
+    [SerializeField] private GameObject leftEngineDamage;
+    [SerializeField] private GameObject rightEngineDamage;
+
     // cached references
     private Spawner _spawner;
     private UIManager _uiManager;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        
+        shieldVisualizer.SetActive(false);
+
         //init cached references
         _spawner = GameObject.Find("Spawner").GetComponent<Spawner>();
         if (_spawner == null)
@@ -45,9 +49,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Spawner is null.");
         }
 
-        shieldVisualizer.SetActive(false);
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-
         if (_uiManager == null)
         {
             Debug.LogError("The UI Manager is null.");
@@ -103,7 +105,7 @@ public class Player : MonoBehaviour
 
     public void DamagePlayer()
     {
-        
+
         if (isShieldActive)
         {
             isShieldActive = false;
@@ -119,6 +121,37 @@ public class Player : MonoBehaviour
             _spawner.OnPlayerDeath();
             Destroy(gameObject);
         }
+
+        RandomizeEngineDamage();
+    }
+
+    private void RandomizeEngineDamage()
+    {
+        var engine = Random.Range(0, 2);
+
+        if (engine == 0)
+        {
+            if (leftEngineDamage.activeInHierarchy == false)
+            {
+                leftEngineDamage.SetActive(true);
+            }
+            else
+            {
+                rightEngineDamage.SetActive(true);
+            }
+        }
+        else
+        {
+            if (rightEngineDamage.activeInHierarchy == false)
+            {
+                rightEngineDamage.SetActive(true);
+            }
+            else
+            {
+                leftEngineDamage.SetActive(true);
+            }
+        }
+
     }
 
     public void EnableTripleShot()
