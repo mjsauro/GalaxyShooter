@@ -81,9 +81,9 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator EnemyDeathRoutine()
     {
+        _collider2D.enabled = false; // stops the enemy from damaging player before the enemy object is destroyed
+        speed /= 2;
         _animator.SetTrigger(OnEnemyDeath); // 0 is on enemy death
-        speed = 0f;
-        _collider2D.enabled = false;
         yield return new WaitForSeconds(2.8f);
         Destroy(gameObject);
         

@@ -10,9 +10,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float upperBoundary = 7f;
     [SerializeField] private GameObject[] powerUps;
     private bool StopSpawning { get; set; } = false;
-
-    // Start is called before the first frame update
-    void Start()
+    
+    public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
@@ -22,6 +21,7 @@ public class Spawner : MonoBehaviour
     {
         while (StopSpawning == false)
         {
+            yield return new WaitForSeconds(3.0f);
             Vector3 positionToSpawn = new Vector3(Random.Range(-sideBoundary, sideBoundary), upperBoundary, 0);
             int powerUpIndex = Random.Range(0, powerUps.Length);
             Instantiate(powerUps[powerUpIndex], positionToSpawn, Quaternion.identity);
@@ -31,6 +31,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
         while (StopSpawning == false)
         {
             Vector3 positionToSpawn = new Vector3(Random.Range(-sideBoundary, sideBoundary), upperBoundary, 0);
