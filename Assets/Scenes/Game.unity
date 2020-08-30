@@ -859,6 +859,8 @@ MonoBehaviour:
   playerSpeed: 5
   lives: 3
   score: 0
+  leftEngineDamage: {fileID: 365530227}
+  rightEngineDamage: {fileID: 1807736420}
   speedMultiplier: 2
   upperBoundary: 0
   lowerBoundary: -3.8
@@ -873,8 +875,6 @@ MonoBehaviour:
   isTripleShotActive: 0
   isSpeedBoostActive: 0
   isShieldActive: 0
-  leftEngineDamage: {fileID: 365530227}
-  rightEngineDamage: {fileID: 1807736420}
 --- !u!212 &1363742015
 SpriteRenderer:
   m_ObjectHideFlags: 0
